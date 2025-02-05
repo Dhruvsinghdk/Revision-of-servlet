@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form action="" method="post">
+        Enter name : <input type="text" name="fname"><br>
+        Enter city : <input type="text" name="city"><br>
+
+        check : <input type="checkbox" name="tick">confirm
+        <input type="submit" value="register">
+    </form>
+
+    <a href=''></a>
+
+</body>
+</html>
+package abc;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet("/url")
+public class Myserver extends HttpServlet {
+
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		
+		res.setContentType("text/html");
+		String name = req.getParameter("first");
+		String second = req.getParameter("second");
+		
+		String n = name+" "+second;
+		
+		PrintWriter p = res.getWriter();
+		
+		p.println(n);
+		
+		HttpSession s = req.getSession();
+		s.setAttribute("new", n);
+		  
+		p.println("<a href='newurl'>Go to Sucesss page</a>");
+		 
+	}
+
+}
+///////////////////////////////
+
