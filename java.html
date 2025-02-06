@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="margin-top: 300px; margin-left: 800px; background-color: chartreuse; height: 190px; width: 200px;">
+        <h1>Login Page</h1>
+    <form action="" method="post" >
+        Enter Name : <input type="text" name="fname">
+        <br>
+        Enter Password : <input type="text" name="pass">
+        <br>
+        <input type="submit" value="register">
+    </form>
+</div>
+
+<a href=""></a>
+</body>
+</html>
+
+
+package abc;
+
+import java.io.IOException;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet("/logout")
+public class Logout  extends HttpServlet {
+
+	@Override
+	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		res.setContentType("text/html");
+		
+		HttpSession s = req.getSession();
+		s.invalidate();
+		
+		RequestDispatcher r = req.getRequestDispatcher("index.html");
+		r.include(req, res);
+		
+	}
+
+}
+
+
+package abc;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet("/newurl")
+
+public class Serversuccess extends HttpServlet {
+
+	@Override
+	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		res.setContentType("text/html");
+		PrintWriter p = res.getWriter();
+		HttpSession s = req.getSession();
+		String name = (String) s.getAttribute("name");
+		
+		p.println("welcome to your sectret data");
+		p.println("Welcome = "+name);
+		
+		RequestDispatcher r = req.getRequestDispatcher("link.html");
+		r.include(req, res);
+		
+		
+		
+		
+	
+	
+	}
+}
+
+
+
+
+package abc;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet("/url")
+public class Myserver extends HttpServlet {
+
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		
+		res.setContentType("text/html");
+		String name = req.getParameter("fname");
+		String pass = req.getParameter("pass");
+		
+		PrintWriter p = res.getWriter();
+		
+		RequestDispatcher rd = req.getRequestDispatcher("link.html");
+		rd.include(req, res);
+		
+		if(pass.equals("dks")) {
+			p.println("Welcome = "+ name);
+			HttpSession s = req.getSession();
+			s.setAttribute("name", name);
+		}
+		else {
+			p.println("wrong password");
+			RequestDispatcher r = req.getRequestDispatcher("index.html");
+			r.include(req, res);
+		}
+		
+	}
+
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<a href="index.html">Login</a>
+<a href="logout">Logout</a>
+<a href="newurl">Profile</a>
+<br>
+<br>
+
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div style="margin-top: 300px; margin-left: 800px; background-color: chartreuse; height: 190px; width: 200px;">
+        <h1>Login Page</h1>
+    <form action="url" method="post" >
+        Enter Name : <input type="text" name="fname">
+        <br>
+        Enter Password : <input type="text" name="pass">
+        <br>
+        <input type="submit" value="register">
+    </form>
+</div>
+
+</body>
+</html>
